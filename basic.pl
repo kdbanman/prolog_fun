@@ -10,27 +10,27 @@ xreverse([H|T], R) :-
     append(Rt, [H], R).
 
 
+% Base case, TODO one element or empty.
 xunique([], []).
 
-xunique([H|T], [H|U]) :-
+% Eliminate from U if not in T
+xunique([H|T], U) :-
+    select(H, U, Up),
+    xmember(H, T),
     xunique(T, U).
 
-/*
-xunique(L, U) :-
-    xunique_accum(L, U, []).
+xunique([H|T], U) :-
+    select(H, U, Up),
+    xnotmember(H, T),
+    xunique(T, Up).
 
-xunique_accum([X], [X], _).
 
-xunique_accum([H|T], [H|U], A) :-
-    xunique_accum(T, U, [H|A]).
-*/
+xnotmember(X, []).
 
-/*
-xunique_accum([H1|T], [H2|U], A) :-
-    H1 \= H2,
-    xmember(H1, A),
-    xunique_accum(T, [H2|U], A).
-*/
+xnotmember(X, [H|T]) :-
+    X \= H,
+    xnotmember(X, T).
+
 
 xmember(X, [X|_]).
 
