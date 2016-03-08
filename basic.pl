@@ -3,14 +3,14 @@ xlast([X], X).
 xlast([_|T], X) :- xlast(T, X).
 
 
-xreverse([X], [X]).
+xreverse([], []).
 
 xreverse([H|T], R) :- 
     xreverse(T, Rt), 
     append(Rt, [H], R).
 
 
-xunique([X], [X]).
+xunique([], []).
 
 xunique([H|T], [H|U]) :-
     xunique(T, U).
