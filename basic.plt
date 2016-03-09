@@ -53,9 +53,6 @@
     test(subset_6) :-
         \+ xsubset([a], [b, [a], 1]).
 
-    basic:edge(a, b).
-    basic:edge(a, c).
-
     test(connected_1, [nondet]) :-
         connected(a, []).
     test(connected_2, [nondet]) :-
@@ -79,5 +76,6 @@
         allConnected([a, c]).
     test(allConnected_5) :-
         \+ allConnected([b, c]).
+        
 :- end_tests(basic).
 

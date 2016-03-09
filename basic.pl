@@ -1,5 +1,7 @@
 :- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1]).
 
+:- use_module(graphs).
+
 /*
 * xreverse/2:
 *   All terms are lists. Predicate is false unless:
