@@ -81,5 +81,21 @@
     test(allConnected_7) :-
         \+ allConnected([a3, b3, c3, d3, e3]).
         
+    test(clique_1, [nondet]) :-
+        clique([]).
+    test(clique_2, [nondet]) :-
+        clique([a]).
+    test(clique_3, [nondet]) :-
+        clique([b]).
+    test(clique_4, [nondet]) :-
+        clique([c]).
+    test(clique_5, [nondet]) :-
+        clique([a, b]).
+    test(clique_6, [nondet]) :-
+        clique([a, c]).
+    test(clique_7, [nondet]) :-
+        \+ clique([b, c]).
+    test(clique_8, [nondet]) :-
+        clique([a3, b3, c3, e3]).
 :- end_tests(basic).
 
