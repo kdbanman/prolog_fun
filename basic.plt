@@ -68,5 +68,16 @@
         \+ connected(c, [b]).
     test(connected_6) :-
         \+ connected(c, [c]).
+
+    test(allConnected_1) :-
+        allConnected([]).
+    test(allConnected_2, [nondet]) :-
+        allConnected([a]).
+    test(allConnected_3, [nondet]) :-
+        allConnected([a, b]).
+    test(allConnected_4, [nondet]) :-
+        allConnected([a, c]).
+    test(allConnected_5) :-
+        \+ allConnected([b, c]).
 :- end_tests(basic).
 

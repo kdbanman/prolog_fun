@@ -67,6 +67,10 @@ removeLast([H|T], [H|T1], Last) :-
 */
 allConnected([]).
 
+allConnected([H|T]) :-
+    connected(H, T),
+    allConnected(T).
+
 
 /*
 * connected/2:
