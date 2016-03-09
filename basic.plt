@@ -76,6 +76,10 @@
         allConnected([a, c]).
     test(allConnected_5) :-
         \+ allConnected([b, c]).
+    test(allConnected_6, [nondet]) :-
+        allConnected([a3, b3, c3, e3]).
+    test(allConnected_7) :-
+        \+ allConnected([a3, b3, c3, d3, e3]).
         
 :- end_tests(basic).
 

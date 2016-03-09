@@ -56,3 +56,4 @@ edge(a3,e3).
 edge(a3,d3).
 edge(b3,c3).
 edge(b3,e3).
+edge(c3,e3).
