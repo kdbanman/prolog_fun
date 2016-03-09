@@ -91,11 +91,27 @@ connected(A, [H|T]) :-
     connected(A, T).
 
 
+/*
+* xappend/3:
+* All terms are lists.  Predicate is false unless:
+*
+* - The first list and second list are any lists.
+* - The third list is the elements of the first list followed by the elements
+*   of the second list.
+*/
 xappend([], L, L).
+
 xappend([H|T], L, [H|R]) :-
     xappend(T, L, R).
 
 
+/*
+* xsubset/2:
+* Both terms are lists.  Predicate is false unless:
+*
+* - The first list is a subset of the second list.
+* - The second list is any list whose elements do not repeat.
+*/
 xsubset([], _).
 
 xsubset([X|Xs], Set) :-
@@ -103,6 +119,12 @@ xsubset([X|Xs], Set) :-
     xsubset(Xs, Set1).
 
 
+/*
+* clique/1:
+* The term is a list.  Predicate is false unless:
+*
+* - Each element in the list is connected to all other elements in the list.
+*/
 clique(L) :-
     findall(X, node(X), Nodes),
     xsubset(L, Nodes),
