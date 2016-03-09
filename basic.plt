@@ -39,5 +39,34 @@
         removeLast([a], [], a).
     test(removeLast_4, [nondet]) :-
         removeLast([[a,b,c]], [], [a,b,c]).
+
+    test(subset_1) :-
+        xsubset([], []).
+    test(subset_2) :-
+        xsubset([], [a, 1]).
+    test(subset_3, [nondet]) :-
+        xsubset([a], [a, 1]).
+    test(subset_4, [nondet]) :-
+        xsubset([a], [b, a, 1]).
+    test(subset_5) :-
+        \+ xsubset([a], [b, 1]).
+    test(subset_6) :-
+        \+ xsubset([a], [b, [a], 1]).
+
+    basic:edge(a, b).
+    basic:edge(a, c).
+
+    test(connected_1, [nondet]) :-
+        connected(a, []).
+    test(connected_2, [nondet]) :-
+        connected(a, [b]).
+    test(connected_3, [nondet]) :-
+        connected(a, [b, c]).
+    test(connected_4, [nondet]) :-
+        connected(c, [a]).
+    test(connected_5) :-
+        \+ connected(c, [b]).
+    test(connected_6) :-
+        \+ connected(c, [c]).
 :- end_tests(basic).
 
