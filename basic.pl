@@ -1,4 +1,4 @@
-:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1]).
+:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxClique/2, allCliques/1, subsetOfNone/2, notSubset/2]).
 
 :- use_module(graphs).
 
@@ -129,3 +129,53 @@ clique(L) :-
     findall(X, node(X), Nodes),
     xsubset(L, Nodes),
     allConnected(L).
+
+
+/*
+* maxClique/2:
+* First term is an integer, second term is a list.  Predicate is false unless:
+*
+* - The second list contains all cliques (lists of nodes) of size N that are
+*   not subsets of any other clique.
+*/
+maxClique(0, []).
+
+maxClique(N, [Hc | Tc]) :-
+    length(Hc, N),
+    clique(Hc),
+    allCliques(Gc),
+    delete(Gc, Hc, OtherCliques),
+    subsetOfNone(Hc, OtherCliques),
+    maxClique(N, Tc).
+
+
+allCliques(Gc) :-
+    findall(C, clique(C), Gc).
+
+
+subsetOfNone(_, []).
+
+subsetOfNone(S, [H|T]) :-
+   notSubset(S, H),
+   subsetOfNone(S, T).
+
+
+/*
+* notSubset/2:
+* Both terms are lists.  Predicate is false unless:
+*
+* - The first list contains one or more element that is not in the second list.
+*
+* TODO this could be simplified by checking for nonequality then reversing the arguments and passing to xsubset.
+*/
+notSubset(S, []) :-
+    S \== [].
+
+notSubset([H|_], L) :-
+    delete(L, H, Lp),
+    length(L, LenBefore),
+    length(Lp, LenAfter),
+    LenBefore == LenAfter.
+
+notSubset([_|T], L) :-
+    notSubset(T, L).
