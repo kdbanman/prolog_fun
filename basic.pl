@@ -1,4 +1,4 @@
-:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxClique/2, allCliques/1, subsetOfNone/2, notSubset/2]).
+:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxClique/2, allCliques/1, subsetOfNone/2, notSubset/2, nonMember/2]).
 
 :- use_module(graphs).
 
@@ -138,9 +138,8 @@ clique(L) :-
 * - The second list contains all cliques (lists of nodes) of size N that are
 *   not subsets of any other clique.
 */
-maxClique(_, []).
-
 maxClique(Size, [CliquesHead | CliquesTail]) :-
+    nonMember(CliquesHead, CliquesTail),
     clique(CliquesHead),
     length(CliquesHead, Size),
     allCliques(AllCliques),
@@ -148,6 +147,7 @@ maxClique(Size, [CliquesHead | CliquesTail]) :-
     subsetOfNone(CliquesHead, OtherCliques),
     maxClique(Size, CliquesTail).
 
+maxClique(_, []).
 
 allCliques(Gc) :-
     findall(C, clique(C), Gc).
@@ -179,3 +179,9 @@ notSubset([H|_], L) :-
 
 notSubset([_|T], L) :-
     notSubset(T, L).
+
+
+nonMember(E, L) :-
+    delete(L, E, R),
+    length(L, N),
+    length(R, N).
