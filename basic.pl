@@ -138,15 +138,15 @@ clique(L) :-
 * - The second list contains all cliques (lists of nodes) of size N that are
 *   not subsets of any other clique.
 */
-maxClique(0, []).
+maxClique(_, []).
 
-maxClique(N, [Hc | Tc]) :-
-    length(Hc, N),
-    clique(Hc),
-    allCliques(Gc),
-    delete(Gc, Hc, OtherCliques),
-    subsetOfNone(Hc, OtherCliques),
-    maxClique(N, Tc).
+maxClique(Size, [CliquesHead | CliquesTail]) :-
+    clique(CliquesHead),
+    length(CliquesHead, Size),
+    allCliques(AllCliques),
+    delete(AllCliques, CliquesHead, OtherCliques),
+    subsetOfNone(CliquesHead, OtherCliques),
+    maxClique(Size, CliquesTail).
 
 
 allCliques(Gc) :-
