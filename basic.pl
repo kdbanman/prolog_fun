@@ -1,4 +1,4 @@
-:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxClique/2, allCliques/1, subsetOfNone/2, notSubset/2, nonMember/2]).
+:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxClique/2, allCliques/1, noStrictSuperset/2, notSubsetStrict/2, nonMember/2]).
 
 :- use_module(graphs).
 
@@ -144,41 +144,47 @@ maxClique(Size, [CliquesHead | CliquesTail]) :-
     length(CliquesHead, Size),
     allCliques(AllCliques),
     delete(AllCliques, CliquesHead, OtherCliques),
-    subsetOfNone(CliquesHead, OtherCliques),
+    noStrictSuperset(CliquesHead, OtherCliques),
     maxClique(Size, CliquesTail).
 
 maxClique(_, []).
+
+maxc(Size, L) :-
+    clique(L),
+    length(L, Size),
+    allCliques(AllCliques),
+    noStrictSuperset(L, AllCliques).
+
 
 allCliques(Gc) :-
     findall(C, clique(C), Gc).
 
 
-subsetOfNone(_, []).
+/*
+* noStrictSuperset/2:
+* Both terms are lists.  Predicate is false unless:
+*
+* - Each list in the second list is *not* a strict superset.
+*/
+noStrictSuperset(_, []).
 
-subsetOfNone(S, [H|T]) :-
-   notSubset(S, H),
-   subsetOfNone(S, T).
+noStrictSuperset(S, [H|T]) :-
+   notSubsetStrict(S, H),
+   noStrictSuperset(S, T).
 
 
 /*
-* notSubset/2:
+* notSubsetStrict/2:
 * Both terms are lists.  Predicate is false unless:
 *
 * - The first list contains one or more element that is not in the second list.
-*
-* TODO this could be simplified by checking for nonequality then reversing the arguments and passing to xsubset.
 */
-notSubset(S, []) :-
-    S \== [].
+notSubsetStrict(S1, S2) :-
+    S1 == S2.
 
-notSubset([H|_], L) :-
-    delete(L, H, Lp),
-    length(L, LenBefore),
-    length(Lp, LenAfter),
-    LenBefore == LenAfter.
-
-notSubset([_|T], L) :-
-    notSubset(T, L).
+notSubsetStrict([H|T], L) :-
+    nonMember(H, L);
+    notSubsetStrict(T, L).
 
 
 nonMember(E, L) :-

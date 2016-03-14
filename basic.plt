@@ -48,6 +48,8 @@
         xsubset([a], [a, 1]).
     test(subset_4, [nondet]) :-
         xsubset([a], [b, a, 1]).
+    test(subset_4, [nondet]) :-
+        xsubset([b, a, 1], [b, a, 1]).
     test(subset_5) :-
         \+ xsubset([a], [b, 1]).
     test(subset_6) :-
@@ -97,5 +99,29 @@
         \+ clique([b, c]).
     test(clique_8, [nondet]) :-
         clique([a3, b3, c3, e3]).
+
+    test(noStrictSuperset_1, [nondet]) :-
+        noStrictSuperset([a, b, c], [[], [a], [a, b], [a, c]]).
+    test(noStrictSuperset_2, [nondet]) :-
+        noStrictSuperset([a, d], [[], [a], [a, b], [a, c]]).
+    test(noStrictSuperset_3, [nondet]) :-
+        noStrictSuperset([a, d], [[], [a], [a, b], [a, d]]).
+    test(noStrictSuperset_4) :-
+        \+ noStrictSuperset([a, d], [[], [a], [a, b], [a, c, d]]).
+
+    test(notSubsetStrict_1, [nondet]) :-
+        notSubsetStrict([a], []).
+    test(notSubsetStrict_2, [nondet]) :-
+        notSubsetStrict([a], [b]).
+    test(notSubsetStrict_3, [nondet]) :-
+        notSubsetStrict([a], [a]).
+    test(notSubsetStrict_4, [nondet]) :-
+        notSubsetStrict([a, b], [a, b]).
+    test(notSubsetStrict_5) :-
+        \+ notSubsetStrict([a, b], [a, b, c]).
+    test(notSubsetStrict_6) :-
+        \+ notSubsetStrict([a, c], [a, b, c]).
+    test(notSubsetStrict_7, [nondet]) :-
+        notSubsetStrict([a, d], [a, b, c]).
 :- end_tests(basic).
 
