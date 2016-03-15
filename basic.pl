@@ -1,4 +1,4 @@
-:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxClique/2, singleMaxClique/2, sizedClique/2, allCliques/1, noStrictSuperset/2, notSubsetStrict/2, nonMember/2]).
+:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxclique/2, singleMaxClique/2, sizedClique/2, allCliques/1, noStrictSuperset/2, notSubsetStrict/2, nonMember/2]).
 
 :- use_module(graphs).
 
@@ -132,13 +132,13 @@ clique(L) :-
 
 
 /*
-* maxClique/2:
+* maxclique/2:
 * First term is an integer, second term is a list.  Predicate is true iff:
 *
 * - The second list contains all cliques (lists of nodes) of size N that are
 *   not subsets of any other clique.
 */
-maxClique(Size, Cliques) :-
+maxclique(Size, Cliques) :-
     findall(C, singleMaxClique(Size, C), Cliques).
 
 
