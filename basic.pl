@@ -1,4 +1,4 @@
-:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxClique/2, singleMaxClique/2, allCliques/1, noStrictSuperset/2, notSubsetStrict/2, nonMember/2]).
+:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxClique/2, singleMaxClique/2, sizedClique/2, allCliques/1, noStrictSuperset/2, notSubsetStrict/2, nonMember/2]).
 
 :- use_module(graphs).
 
@@ -155,14 +155,25 @@ maxClique(_, []).
  * First term is an integer, second term is a list.  Predicate is true iff:
  *
  * - The first term equals the number of elements in the second term.
- * - The second term contains a clique (list of nodes) that is not a subset of
+ * - The second term is a clique (list of nodes) that is not a subset of
  *   any other clique.
  */
 singleMaxClique(Size, L) :-
-    clique(L),
-    length(L, Size),
+    sizedClique(Size, L),
     allCliques(AllCliques),
     noStrictSuperset(L, AllCliques).
+
+
+/*
+ * sizedClique/2:
+ * First term is an integer, second term is a list.  Predicate is true iff:
+ *
+ * - The first term equals the number of elements in the second term.
+ * - The second term is a clique (list of nodes).
+ */
+sizedClique(Size, L) :-
+    clique(L),
+    length(L, Size).
 
 /*
  * allCliques/1:

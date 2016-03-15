@@ -123,5 +123,16 @@
         \+ notSubsetStrict([a, c], [a, b, c]).
     test(notSubsetStrict_7, [nondet]) :-
         notSubsetStrict([a, d], [a, b, c]).
+
+    test(singleMaxClique_1, [nondet]) :-
+        singleMaxClique(4, [a3, b3, c3, e3]).
+    test(singleMaxClique_2, [nondet]) :-
+        singleMaxClique(2, [a, b]).
+    test(singleMaxClique_3, [nondet]) :-
+        singleMaxClique(2, [a, c]).
+    test(singleMaxClique_4, [nondet]) :-
+        \+ singleMaxClique(3, [a3, b3, c3]).
+    test(singleMaxClique_5, [nondet]) :-
+        \+ singleMaxClique(2, [b, c]).
 :- end_tests(basic).
 
