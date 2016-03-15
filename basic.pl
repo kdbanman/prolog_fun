@@ -138,16 +138,8 @@ clique(L) :-
 * - The second list contains all cliques (lists of nodes) of size N that are
 *   not subsets of any other clique.
 */
-maxClique(Size, [CliquesHead | CliquesTail]) :-
-    nonMember(CliquesHead, CliquesTail),
-    clique(CliquesHead),
-    length(CliquesHead, Size),
-    allCliques(AllCliques),
-    delete(AllCliques, CliquesHead, OtherCliques),
-    noStrictSuperset(CliquesHead, OtherCliques),
-    maxClique(Size, CliquesTail).
-
-maxClique(_, []).
+maxClique(Size, Cliques) :-
+    findall(C, singleMaxClique(Size, C), Cliques).
 
 
 /*
@@ -174,6 +166,7 @@ singleMaxClique(Size, L) :-
 sizedClique(Size, L) :-
     clique(L),
     length(L, Size).
+
 
 /*
  * allCliques/1:
@@ -208,7 +201,10 @@ notSubsetStrict(S1, S2) :-
     S1 == S2.
 
 notSubsetStrict([H|T], L) :-
-    nonMember(H, L);
+    nonMember(H, L).
+
+notSubsetStrict([H|T], L) :-
+    member(H, L),
     notSubsetStrict(T, L).
 
 
