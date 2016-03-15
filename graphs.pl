@@ -89,18 +89,6 @@ node(c3).
 node(d3).
 node(e3).
 
-% GRAPH 4 NODES
-
-node(a4).
-node(b4).
-node(c4).
-node(d4).
-node(e4).
-
-% GRAPH 5 NODES
-
-node(a5).
-
 
 % GRAPH 0 EDGES
 
@@ -136,22 +124,5 @@ edge(a3,d3).
 edge(b3,c3).
 edge(b3,e3).
 edge(c3,e3).
-
-
-% GRAPH 4 EDGES
-
-edge(a4,b4).
-edge(a4,c4).
-edge(a4,e4).
-edge(a4,d4).
-edge(b4,c4).
-edge(b4,e4).
-edge(c4,e4).
-edge(d4,d4).
-
-
-% GRAPH 5 EDGES
-
-edge(a5, a5).
 
 
