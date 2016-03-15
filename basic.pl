@@ -1,4 +1,4 @@
-:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxClique/2, allCliques/1, noStrictSuperset/2, notSubsetStrict/2, nonMember/2]).
+:- module(basic, [xreverse/2, xunique/2, xunion/3, removeLast/3, allConnected/1, connected/2, xsubset/2, xappend/3, clique/1, maxClique/2, singleMaxClique/2, allCliques/1, noStrictSuperset/2, notSubsetStrict/2, nonMember/2]).
 
 :- use_module(graphs).
 
@@ -149,13 +149,27 @@ maxClique(Size, [CliquesHead | CliquesTail]) :-
 
 maxClique(_, []).
 
-maxc(Size, L) :-
+
+/*
+ * singleMaxClique/2:
+ * First term is an integer, second term is a list.  Predicate is false unless:
+ *
+ * - The first term equals the number of elements in the second term.
+ * - The second term contains a clique (list of nodes) that is not a subset of
+ *   any other clique.
+ */
+singleMaxClique(Size, L) :-
     clique(L),
     length(L, Size),
     allCliques(AllCliques),
     noStrictSuperset(L, AllCliques).
 
-
+/*
+ * allCliques/1:
+ * Term is a list.  Predicate is false unless:
+ *
+ * - The term represents all cliques from node/1 and edge/2 facts.
+ */
 allCliques(Gc) :-
     findall(C, clique(C), Gc).
 
@@ -187,6 +201,12 @@ notSubsetStrict([H|T], L) :-
     notSubsetStrict(T, L).
 
 
+/*
+ * nonMember/2:
+ * Last term is a list.  Predicate is false unless:
+ *
+ * - The first term is NOT a member of L (nesting ignored).
+ */
 nonMember(E, L) :-
     delete(L, E, R),
     length(L, N),
