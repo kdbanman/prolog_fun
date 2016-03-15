@@ -1,5 +1,45 @@
 :- module(graphs, [node/1, edge/2]).
 
+
+% GRAPH 0
+%
+%   b--a--c
+
+
+% GRAPH 1
+%
+%    d1    e1
+%     \   / 
+%      \ /
+%       a1----b1
+%        \   /
+%         \ /
+%          c1
+
+
+% GRAPH 2
+%
+%    d2    e2
+%     \   /  \
+%      \ /    \
+%       a2----b2
+%        \   /
+%         \ /
+%          c2
+
+
+% GRAPH 3
+%
+%    d3    e3
+%     \   / |\
+%      \ /  | \
+%       a3--+-b3
+%        \  | /
+%         \ |/
+%          c3
+
+
+
 % GRAPH 0 NODES
 
 node(a).
