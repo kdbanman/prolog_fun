@@ -4,7 +4,7 @@
 
 /*
 * xreverse/2:
-*   All terms are lists. Predicate is false unless:
+*   All terms are lists. Predicate is true iff:
 *
 *   - The first list is the reverse of the second list (and vice-versa).
 */
@@ -17,7 +17,7 @@ xreverse([H|T], R) :-
 
 /*
 * xunique/2:
-*   All terms are lists.  Predicate is false unless:
+*   All terms are lists.  Predicate is true iff:
 *
 *   - The first list is any list.
 *   - The second list is a list of the unique elements from the first list.
@@ -36,7 +36,7 @@ xunique([H|T], [H|U]) :-
    
 /*
 * xunion/3:
-*   All terms are lists.  Predicate is false unless:
+*   All terms are lists.  Predicate is true iff:
 *
 *   - The first and second lists are any list.
 *   - The third list is the set-union of the elements that occur in the first
@@ -49,7 +49,7 @@ xunion(L1, L2, L) :-
 
 /*
 * removeLast/3:
-*   The first two terms are lists.  Predicate is false unless:
+*   The first two terms are lists.  Predicate is true iff:
 *
 *   - The first list is any list.
 *   - The second list is the first list without its last element.
@@ -63,7 +63,7 @@ removeLast([H|T], [H|T1], Last) :-
 
 /*
 * allConnected/1:
-* The input term is a list.  Predicate is false unless: 
+* The input term is a list.  Predicate is true iff: 
 *
 * - 
 */
@@ -76,7 +76,7 @@ allConnected([H|T]) :-
 
 /*
 * connected/2:
-* The second term is a list.  Predicate is false unless:
+* The second term is a list.  Predicate is true iff:
 *
 * - The first term is connected to each element of the second term by edge/2.
 */
@@ -93,7 +93,7 @@ connected(A, [H|T]) :-
 
 /*
 * xappend/3:
-* All terms are lists.  Predicate is false unless:
+* All terms are lists.  Predicate is true iff:
 *
 * - The first list and second list are any lists.
 * - The third list is the elements of the first list followed by the elements
@@ -107,7 +107,7 @@ xappend([H|T], L, [H|R]) :-
 
 /*
 * xsubset/2:
-* Both terms are lists.  Predicate is false unless:
+* Both terms are lists.  Predicate is true iff:
 *
 * - The first list is a subset of the second list.
 * - The second list is any list whose elements do not repeat.
@@ -121,7 +121,7 @@ xsubset([X|Xs], Set) :-
 
 /*
 * clique/1:
-* The term is a list.  Predicate is false unless:
+* The term is a list.  Predicate is true iff:
 *
 * - Each element in the list is connected to all other elements in the list.
 */
@@ -133,7 +133,7 @@ clique(L) :-
 
 /*
 * maxClique/2:
-* First term is an integer, second term is a list.  Predicate is false unless:
+* First term is an integer, second term is a list.  Predicate is true iff:
 *
 * - The second list contains all cliques (lists of nodes) of size N that are
 *   not subsets of any other clique.
@@ -152,7 +152,7 @@ maxClique(_, []).
 
 /*
  * singleMaxClique/2:
- * First term is an integer, second term is a list.  Predicate is false unless:
+ * First term is an integer, second term is a list.  Predicate is true iff:
  *
  * - The first term equals the number of elements in the second term.
  * - The second term contains a clique (list of nodes) that is not a subset of
@@ -166,7 +166,7 @@ singleMaxClique(Size, L) :-
 
 /*
  * allCliques/1:
- * Term is a list.  Predicate is false unless:
+ * Term is a list.  Predicate is true iff:
  *
  * - The term represents all cliques from node/1 and edge/2 facts.
  */
@@ -176,7 +176,7 @@ allCliques(Gc) :-
 
 /*
 * noStrictSuperset/2:
-* Both terms are lists.  Predicate is false unless:
+* Both terms are lists.  Predicate is true iff:
 *
 * - Each list in the second list is *not* a strict superset.
 */
@@ -189,7 +189,7 @@ noStrictSuperset(S, [H|T]) :-
 
 /*
 * notSubsetStrict/2:
-* Both terms are lists.  Predicate is false unless:
+* Both terms are lists.  Predicate is true iff:
 *
 * - The first list contains one or more element that is not in the second list.
 */
@@ -203,7 +203,7 @@ notSubsetStrict([H|T], L) :-
 
 /*
  * nonMember/2:
- * Last term is a list.  Predicate is false unless:
+ * Last term is a list.  Predicate is true iff:
  *
  * - The first term is NOT a member of L (nesting ignored).
  */
