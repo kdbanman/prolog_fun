@@ -52,6 +52,13 @@
 %          c4
 
 
+% GRAPH 5
+%
+%    /\
+%    |/
+%    a5
+
+
 % GRAPH 0 NODES
 
 node(a).
@@ -89,6 +96,10 @@ node(b4).
 node(c4).
 node(d4).
 node(e4).
+
+% GRAPH 5 NODES
+
+node(a5).
 
 
 % GRAPH 0 EDGES
@@ -136,6 +147,11 @@ edge(a4,d4).
 edge(b4,c4).
 edge(b4,e4).
 edge(c4,e4).
-%edge(d4,d4).
+edge(d4,d4).
+
+
+% GRAPH 5 EDGES
+
+edge(a5, a5).
 
 
