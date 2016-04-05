@@ -1,4 +1,4 @@
-:- module(constraint, [fourSquares/2, disarm/3, trivial/1, asDomain/2]).
+:- module(constraint, [fourSquares/2, disarm/3, inList/2, asDomain/2]).
 
 :- use_module(library(clpfd)).
 
@@ -32,12 +32,34 @@ fourSquares(N, Squares) :-
  *
  * Whew!
  */
-disarm(A, B, Disarm) :-
-    [DH | DT] = Disarm.
+disarm([], [], []).
+
+disarm(A, B, D) :-
+    select(A1, A, A_A1),
+    select(A2, A_A1, A_A1A2),
+    select(B1, B, B_B1),
+    A1 + A2 #= B1,
+    A1 #=< A2,
+    ddd([A1, A2], [B1], A_A1A2, B_B1, D).
 
 
-trivial(X) :-
-    X in 1\/2\/3.
+disarm(A, B, D) :-
+    select(B1, B, B_B1),
+    select(B2, B_B1, B_B1B2),
+    select(A1, A, A_A1),
+    B1 + B2 #= A1,
+    B1 #=< B2,
+    ddd([A1], [B1, B2], A_A1, B_B1B2, D).
+
+
+ddd(DisarmA, DisarmB, RemainingA, RemainingB, [DisarmHead | DisarmTail]) :-
+    DisarmHead = [DisarmA, DisarmB],
+    disarm(RemainingA, RemainingB, DisarmTail).
+
+inList(E, L) :-
+    asDomain(L, Ld),
+    E in Ld.
+
 
 asDomain([E], E).
 
