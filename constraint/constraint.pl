@@ -51,6 +51,16 @@ disarm(A, B, D) :-
     B1 #=< B2,
     ddd([A1], [B1, B2], A_A1, B_B1B2, D).
 
+% test strategy - will build all options and find valid ones
+%increasingDisarmaments(D) :-
+%    map to sum
+%    true if sorted
+
+% construct strategy - will take almost correct option and correct it
+%increasingDisarmaments(D, Dsorted) :-
+%    map to sum
+%    sort with parallel swaps
+
 
 ddd(DisarmA, DisarmB, RemainingA, RemainingB, [DisarmHead | DisarmTail]) :-
     DisarmHead = [DisarmA, DisarmB],
