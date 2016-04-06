@@ -13,7 +13,9 @@
     test(fourSquares_4) :-
         fourSquares(20, [1,1,3,3]).
 
-    test(custDomain_1) :-
-        trivial(3).
+    test(disarm_1, [nondet]) :-
+        disarm([1,5], [6], [[[1,5], [6]]]).
+    test(disarm_2, [nondet]) :-
+        disarm([1,5,2], [6,1,1], [[[2], [1,1]],[[1,5], [6]]]).
 
 :- end_tests(constraint).

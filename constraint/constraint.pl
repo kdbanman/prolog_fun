@@ -1,4 +1,4 @@
-:- module(constraint, [fourSquares/2, disarm/3, inList/2, asDomain/2]).
+:- module(constraint, [fourSquares/2, disarm/3]).
 
 :- use_module(library(clpfd)).
 
@@ -35,44 +35,39 @@ fourSquares(N, Squares) :-
 disarm([], [], []).
 
 disarm(A, B, D) :-
-    select(A1, A, A_A1),
-    select(A2, A_A1, A_A1A2),
-    select(B1, B, B_B1),
-    A1 + A2 #= B1,
-    A1 #=< A2,
-    ddd([A1, A2], [B1], A_A1A2, B_B1, D).
+    selectTwo(DisarmA, A, RemainingA),
+    selectOne(DisarmB, B, RemainingB),
+    singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, D).
 
 
 disarm(A, B, D) :-
-    select(B1, B, B_B1),
-    select(B2, B_B1, B_B1B2),
-    select(A1, A, A_A1),
-    B1 + B2 #= A1,
-    B1 #=< B2,
-    ddd([A1], [B1, B2], A_A1, B_B1B2, D).
-
-% test strategy - will build all options and find valid ones
-%increasingDisarmaments(D) :-
-%    map to sum
-%    true if sorted
-
-% construct strategy - will take almost correct option and correct it
-%increasingDisarmaments(D, Dsorted) :-
-%    map to sum
-%    sort with parallel swaps
+    selectOne(DisarmA, A, RemainingA),
+    selectTwo(DisarmB, B, RemainingB),
+    singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, D).
 
 
-ddd(DisarmA, DisarmB, RemainingA, RemainingB, [DisarmHead | DisarmTail]) :-
+
+selectTwo(Selected, Source, Remaining) :-
+    select(E1, Source, Tmp),
+    select(E2, Tmp, Remaining),
+    E1 =< E2,
+    Selected = [E1, E2].
+
+
+selectOne(Selected, Source, Remaining) :-
+    select(E, Source, Remaining),
+    Selected = [E].
+
+
+singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, [DisarmHead | DisarmTail]) :-
+    sumlist(DisarmA, SumA),
+    sumlist(DisarmB, SumB),
+    SumA = SumB,
     DisarmHead = [DisarmA, DisarmB],
     disarm(RemainingA, RemainingB, DisarmTail).
 
-inList(E, L) :-
-    asDomain(L, Ld),
-    E in Ld.
 
-
-asDomain([E], E).
-
-asDomain([E|T],  '\\/'(E, TDomain)) :-
-    asDomain(T, TDomain).
-    
+sumCompare(C, L1, L2) :-
+    sumlist(L1, S1),
+    sumlist(L2, S2),
+    compare(C, S1, S2).
