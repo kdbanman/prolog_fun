@@ -37,13 +37,15 @@ disarm([], [], []).
 disarm(A, B, D) :-
     selectTwo(DisarmA, A, RemainingA),
     selectOne(DisarmB, B, RemainingB),
-    singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, D).
+    singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, UnorderedD),
+    predsort(compareDisarm, UnorderedD, D).
 
 
 disarm(A, B, D) :-
     selectOne(DisarmA, A, RemainingA),
     selectTwo(DisarmB, B, RemainingB),
-    singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, D).
+    singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, UnorderedD),
+    predsort(compareDisarm, UnorderedD, D).
 
 
 
@@ -67,7 +69,9 @@ singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, [DisarmHead | DisarmTail]
     disarm(RemainingA, RemainingB, DisarmTail).
 
 
-sumCompare(C, L1, L2) :-
-    sumlist(L1, S1),
-    sumlist(L2, S2),
-    compare(C, S1, S2).
+compareDisarm(C, L1, L2) :-
+    flatten(L1, Flat1),
+    flatten(L2, Flat2),
+    sumlist(Flat1, Sum1),
+    sumlist(Flat2, Sum2),
+    compare(C, Sum1, Sum2).
