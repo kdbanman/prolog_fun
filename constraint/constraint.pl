@@ -40,7 +40,6 @@ disarm(A, B, D) :-
     singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, UnorderedD),
     predsort(compareDisarm, UnorderedD, D).
 
-
 disarm(A, B, D) :-
     selectOne(DisarmA, A, RemainingA),
     selectTwo(DisarmB, B, RemainingB),
@@ -48,7 +47,14 @@ disarm(A, B, D) :-
     predsort(compareDisarm, UnorderedD, D).
 
 
-
+/*
+* selectTwo/3:
+* All terms are lists.  Predicate is true iff:
+*
+* - Selected is length 2, each element of which is a unique element of Source
+* - Source is a list of at least length 2
+* - Remaining is Source less the elements in Selected.
+*/
 selectTwo(Selected, Source, Remaining) :-
     select(E1, Source, Tmp),
     select(E2, Tmp, Remaining),
@@ -56,11 +62,27 @@ selectTwo(Selected, Source, Remaining) :-
     Selected = [E1, E2].
 
 
+/*
+* selectOne/3:
+* All terms are lists.  Predicate is true iff:
+*
+* - Selected is length 1, and the element is an element of Source
+* - Source is a list of at least length 1
+* - Remaining is Source less the element in Selected.
+*/
 selectOne(Selected, Source, Remaining) :-
     select(E, Source, Remaining),
     Selected = [E].
 
 
+/*
+* singleDisarm/5:
+* All terms are lists.  Predicate is true iff:
+*
+* - DisarmA and DisarmB have equal sums
+* - The head of the last term is a list of DisarmA and DisarmB
+* - RemainingA and RemainingB are disarmed by the tail of the last term
+*/
 singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, [DisarmHead | DisarmTail]) :-
     sumlist(DisarmA, SumA),
     sumlist(DisarmB, SumB),
@@ -69,6 +91,15 @@ singleDisarm(DisarmA, DisarmB, RemainingA, RemainingB, [DisarmHead | DisarmTail]
     disarm(RemainingA, RemainingB, DisarmTail).
 
 
+/*
+* compareDisarm/3:
+* First term is atom, rest of terms are lists.  Predicate is true iff:
+*
+* - C is < if the sum of L1 is less than the sum of L2
+* - C is > if the sum of L1 is more than the sum of L2
+* - C is = if the sum of L1 is equal to the sum of L2
+* - Lists are possibly nested lists of integers
+*/
 compareDisarm(C, L1, L2) :-
     flatten(L1, Flat1),
     flatten(L2, Flat2),
